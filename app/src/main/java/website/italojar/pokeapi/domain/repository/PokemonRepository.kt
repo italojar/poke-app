@@ -1,6 +1,6 @@
 package website.italojar.pokeapi.domain.repository
 
-import website.italojar.pokeapi.data.dto.PokemonDto
+import website.italojar.pokeapi.data.model.dto.PokemonDto
 
 interface PokemonRepository {
 

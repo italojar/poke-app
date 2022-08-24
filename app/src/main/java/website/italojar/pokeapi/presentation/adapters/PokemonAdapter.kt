@@ -9,12 +9,11 @@ import website.italojar.pokeapi.databinding.ItemPokemonBinding
 import website.italojar.pokeapi.domain.model.Pokemon
 import website.italojar.pokeapi.presentation.interfaces.IPokemonListener
 import com.squareup.picasso.Picasso
-
-
+import website.italojar.pokeapi.presentation.model.PokemonVO
 
 
 class PokemonAdapter(
-    private val values: List<Pokemon>,
+    private val values: List<PokemonVO>,
     private val listeners: IPokemonListener
 ): RecyclerView.Adapter<PokemonAdapter.PokemonViewHolder>() {
 
@@ -33,7 +32,7 @@ class PokemonAdapter(
     inner class PokemonViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val binding = ItemPokemonBinding.bind(view)
 
-        fun render(pokemon: Pokemon) {
+        fun render(pokemon: PokemonVO) {
             binding.pokemonName.text = pokemon.name
             Picasso.get().load(pokemon.url)
                 .resize(360, 360)

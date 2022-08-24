@@ -1,9 +1,9 @@
 package website.italojar.pokeapi.domain.mappers
 
-import website.italojar.pokeapi.data.model.dto.PokemonDto
 import website.italojar.pokeapi.domain.model.Pokemon
+import website.italojar.pokeapi.presentation.model.PokemonVO
 
-fun PokemonDto.toDomain() = Pokemon(
+fun Pokemon.toPresentation() = PokemonVO(
     name = this.name,
     url = this.url
 )

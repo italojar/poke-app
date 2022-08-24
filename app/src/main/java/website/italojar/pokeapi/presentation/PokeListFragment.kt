@@ -13,6 +13,7 @@ import website.italojar.pokeapi.databinding.FragmentPokeListBinding
 import website.italojar.pokeapi.domain.model.Pokemon
 import website.italojar.pokeapi.presentation.adapters.PokemonAdapter
 import website.italojar.pokeapi.presentation.interfaces.IPokemonListener
+import website.italojar.pokeapi.presentation.model.PokemonVO
 
 
 class PokeListFragment : Fragment(), IPokemonListener {
@@ -21,7 +22,7 @@ class PokeListFragment : Fragment(), IPokemonListener {
     private val binding get() = _binding!!
 
     private val linearLayoutManager = LinearLayoutManager(context)
-    private lateinit var pokemonsMutableList: MutableList<Pokemon>
+    private lateinit var pokemonsMutableList: MutableList<PokemonVO>
     private val pokemonsViewModel: PokeListViewModel by viewModels()
     private lateinit var pokemonAdapter: PokemonAdapter
 
@@ -37,7 +38,7 @@ class PokeListFragment : Fragment(), IPokemonListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pokemonsViewModel.pokemonsModel.observe(viewLifecycleOwner, Observer { pokemons ->
-            pokemonsMutableList = pokemons as MutableList<Pokemon>
+            pokemonsMutableList = pokemons as MutableList<PokemonVO>
             initRecyclerView()
         })
         binding.floatingActionButton.setOnClickListener { addPokemon() }
@@ -49,7 +50,7 @@ class PokeListFragment : Fragment(), IPokemonListener {
         binding.rvPokemon.adapter = pokemonAdapter
     }
 
-    override fun onPokemonClick(pokemon: Pokemon) {
+    override fun onPokemonClick(pokemon: PokemonVO) {
         Toast.makeText(requireContext(), pokemon.name, Toast.LENGTH_SHORT).show()
     }
 
@@ -61,10 +62,10 @@ class PokeListFragment : Fragment(), IPokemonListener {
     private fun addPokemon() {
         if (!this::pokemonsMutableList.isInitialized){
             pokemonsMutableList = mutableListOf(
-                Pokemon("bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png"))
+                PokemonVO("bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png"))
             initRecyclerView()
         }else {
-            val pokemon = Pokemon("bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png")
+            val pokemon = PokemonVO("bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png")
             pokemonsMutableList.add(0, pokemon)
             pokemonAdapter.notifyItemInserted(0)
             linearLayoutManager.scrollToPositionWithOffset(0, 8)

@@ -1,20 +1,19 @@
 package website.italojar.pokeapi.domain.usecase
 
-import website.italojar.pokeapi.data.service.PokemonService
+import website.italojar.pokeapi.data.repository.PokemonsRepositoryImpl
 import website.italojar.pokeapi.domain.mappers.toDomain
 import website.italojar.pokeapi.domain.model.Pokemon
 
 class GetPokemonsUseCase {
 
-    val repository = PokemonService()
+    private val repository = PokemonsRepositoryImpl()
 
     suspend operator fun invoke():List<Pokemon>{
         val pokemons = repository.getPokemons()
 
-        return if(pokemons.isNotEmpty()){
+        return if(pokemons.isNotEmpty())
             pokemons.map { pokemonDto -> pokemonDto.toDomain() }
-        }else{
+        else
             emptyList() // Call to Database
-        }
     }
 }

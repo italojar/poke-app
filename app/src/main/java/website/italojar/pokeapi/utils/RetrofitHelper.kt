@@ -7,7 +7,7 @@ object RetrofitHelper {
 
     fun getRetrofit(): Retrofit{
         return Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
+            .baseUrl(Constatnts.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
