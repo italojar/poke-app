@@ -7,7 +7,7 @@ import website.italojar.pokeapi.data.model.dto.PokemonData
 import website.italojar.pokeapi.data.model.dto.PokemonDto
 import website.italojar.pokeapi.data.source.remote.interfaces.PokemonApiClient
 import website.italojar.pokeapi.domain.repository.PokemonRepository
-import website.italojar.pokeapi.utils.RetrofitHelper
+import website.italojar.pokeapi.common.RetrofitHelper
 
 class PokemonService: PokemonRepository {
 

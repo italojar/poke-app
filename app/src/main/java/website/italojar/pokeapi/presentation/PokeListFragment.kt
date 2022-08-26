@@ -50,15 +50,6 @@ class PokeListFragment : Fragment(), IPokemonListener {
         binding.rvPokemon.adapter = pokemonAdapter
     }
 
-    override fun onPokemonClick(pokemon: PokemonVO) {
-        Toast.makeText(requireContext(), pokemon.name, Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onDeletePokemon(position: Int) {
-        pokemonsMutableList.removeAt(position)
-        pokemonAdapter.notifyItemRemoved(position)
-    }
-
     private fun addPokemon() {
         if (!this::pokemonsMutableList.isInitialized){
             pokemonsMutableList = mutableListOf(
@@ -71,5 +62,14 @@ class PokeListFragment : Fragment(), IPokemonListener {
             linearLayoutManager.scrollToPositionWithOffset(0, 8)
         }
         pokemonsViewModel.updatePokemons(pokemonsMutableList)
+    }
+
+    override fun onPokemonClick(pokemon: PokemonVO) {
+        Toast.makeText(requireContext(), pokemon.name, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDeletePokemon(position: Int) {
+        pokemonsMutableList.removeAt(position)
+        pokemonAdapter.notifyItemRemoved(position)
     }
 }
