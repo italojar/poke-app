@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/pokeListFragment"
-        android:name="website.italojar.pokeapi.presentation.PokeListFragment"
+        android:name="website.italojar.pokeapi.presentation.pokemons.PokeListFragment"
         android:label="fragment_poke_list"
         tools:layout="@layout/fragment_poke_list" />
 </navigation>
