@@ -55,17 +55,15 @@ class PokeListFragment : Fragment(), IPokemonListener {
     }
 
     private fun addPokemon() {
+        val pokemon = PokemonVO((11..100).random() , "bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png")
         if (!this::pokemonsMutableList.isInitialized){
-            pokemonsMutableList = mutableListOf(
-                PokemonVO("bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png"))
             initRecyclerView()
         }else {
-            val pokemon = PokemonVO("bulbasaur", "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-viii/icons/1.png")
             pokemonsMutableList.add(0, pokemon)
             pokemonAdapter.notifyItemInserted(0)
             linearLayoutManager.scrollToPositionWithOffset(0, 8)
         }
-        pokemonsViewModel.updatePokemons(pokemonsMutableList)
+        pokemonsViewModel.updatePokemon(pokemon)
     }
 
     override fun onPokemonClick(pokemon: PokemonVO) {
@@ -73,6 +71,7 @@ class PokeListFragment : Fragment(), IPokemonListener {
     }
 
     override fun onDeletePokemon(position: Int) {
+        pokemonsViewModel.deletePokemon(pokemonsMutableList[position])
         pokemonsMutableList.removeAt(position)
         pokemonAdapter.notifyItemRemoved(position)
     }

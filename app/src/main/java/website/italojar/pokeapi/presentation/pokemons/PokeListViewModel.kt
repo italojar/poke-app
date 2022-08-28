@@ -7,13 +7,18 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import website.italojar.pokeapi.domain.mappers.toPresentation
+import website.italojar.pokeapi.domain.usecase.DeletePokemonUseCase
 import website.italojar.pokeapi.domain.usecase.GetPokemonsUseCase
+import website.italojar.pokeapi.domain.usecase.InsertPokemonUseCase
 import website.italojar.pokeapi.presentation.model.PokemonVO
+import website.italojar.pokeapi.presentation.model.mappers.toDomain
 import javax.inject.Inject
 
 @HiltViewModel
 class PokeListViewModel @Inject constructor(
-    private val getPokemonsUseCase: GetPokemonsUseCase
+    private val getPokemonsUseCase: GetPokemonsUseCase,
+    private val insertPokemonUseCase: InsertPokemonUseCase,
+    private val deletePokemonUseCase: DeletePokemonUseCase
 ) : ViewModel() {
 
     private val _pokemons = MutableLiveData<List<PokemonVO>>()
@@ -29,13 +34,21 @@ class PokeListViewModel @Inject constructor(
             isLoading.postValue(true)
             val pokemonsList = getPokemonsUseCase()
             if (!pokemonsList.isNullOrEmpty()){
-                _pokemons.value = pokemonsList.map { pokemon -> pokemon.toPresentation() }
+                _pokemons.value = pokemonsList
                 isLoading.postValue(false)
             }
         }
     }
 
-    fun updatePokemons(pokemons: MutableList<PokemonVO>) {
-        viewModelScope.launch { _pokemons.postValue(pokemons) }
+    fun updatePokemon(pokemon: PokemonVO) {
+        viewModelScope.launch {
+            insertPokemonUseCase.invoke(pokemon.toDomain())
+        }
+    }
+
+    fun deletePokemon(pokemon: PokemonVO) {
+        viewModelScope.launch {
+            deletePokemonUseCase.invoke(pokemon.toDomain())
+        }
     }
 }

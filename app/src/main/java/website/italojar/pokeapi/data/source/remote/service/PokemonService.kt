@@ -11,9 +11,9 @@ import javax.inject.Inject
 
 class PokemonService @Inject constructor(
     private val apiClient: PokemonApiClient
-) : PokemonRepository {
+) {
 
-    override suspend fun getPokemons(): List<PokemonDto> {
+    suspend fun getPokemonsFromApi(): List<PokemonDto> {
         return withContext(Dispatchers.IO) {
             val response: Response<PokemonData> = apiClient.getAllPokemons()
             response.body()?.results ?: emptyList()
