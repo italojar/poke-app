@@ -10,12 +10,13 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import dagger.hilt.android.AndroidEntryPoint
 import website.italojar.pokeapi.databinding.FragmentPokeListBinding
 import website.italojar.pokeapi.presentation.adapters.PokemonAdapter
 import website.italojar.pokeapi.presentation.interfaces.IPokemonListener
 import website.italojar.pokeapi.presentation.model.PokemonVO
 
-
+@AndroidEntryPoint
 class PokeListFragment : Fragment(), IPokemonListener {
 
     private var _binding: FragmentPokeListBinding? = null
@@ -42,7 +43,7 @@ class PokeListFragment : Fragment(), IPokemonListener {
             initRecyclerView()
         })
         pokemonsViewModel.isLoading.observe(viewLifecycleOwner, Observer { visibility ->
-            binding.progressBar.root.isVisible = visibility
+            binding.progressBarApp.root.isVisible = visibility
         })
         binding.floatingActionButton.setOnClickListener { addPokemon() }
     }

@@ -7,16 +7,15 @@ import website.italojar.pokeapi.data.model.dto.PokemonData
 import website.italojar.pokeapi.data.model.dto.PokemonDto
 import website.italojar.pokeapi.data.source.remote.interfaces.PokemonApiClient
 import website.italojar.pokeapi.domain.repository.PokemonRepository
-import website.italojar.pokeapi.common.RetrofitHelper
+import javax.inject.Inject
 
-class PokemonService: PokemonRepository {
-
-    private val retrofit = RetrofitHelper.getRetrofit()
+class PokemonService @Inject constructor(
+    private val apiClient: PokemonApiClient
+) : PokemonRepository {
 
     override suspend fun getPokemons(): List<PokemonDto> {
         return withContext(Dispatchers.IO) {
-            val response: Response<PokemonData> =
-                retrofit.create(PokemonApiClient::class.java).getAllPokemons()
+            val response: Response<PokemonData> = apiClient.getAllPokemons()
             response.body()?.results ?: emptyList()
         }
     }
