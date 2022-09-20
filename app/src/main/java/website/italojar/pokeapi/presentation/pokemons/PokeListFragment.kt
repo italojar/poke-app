@@ -39,7 +39,7 @@ class PokeListFragment : Fragment(), IPokemonListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         pokemonsViewModel.pokemons.observe(viewLifecycleOwner, Observer { pokemons ->
-            pokemonsMutableList = pokemons as MutableList<PokemonVO>
+                pokemonsMutableList = pokemons as MutableList<PokemonVO>
             initRecyclerView()
         })
         pokemonsViewModel.isLoading.observe(viewLifecycleOwner, Observer { visibility ->

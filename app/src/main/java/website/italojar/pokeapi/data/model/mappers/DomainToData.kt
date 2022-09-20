@@ -1,4 +1,4 @@
-package website.italojar.pokeapi.domain.mappers
+package website.italojar.pokeapi.data.model.mappers
 
 import website.italojar.pokeapi.data.model.entities.PokemonEntity
 import website.italojar.pokeapi.domain.model.Pokemon

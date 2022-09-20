@@ -5,6 +5,7 @@ import website.italojar.pokeapi.data.model.dto.PokemonDto
 import website.italojar.pokeapi.data.model.entities.PokemonEntity
 import website.italojar.pokeapi.data.model.mappers.toDomain
 import website.italojar.pokeapi.data.source.remote.service.PokemonService
+import website.italojar.pokeapi.data.model.mappers.toEntity
 import website.italojar.pokeapi.domain.model.Pokemon
 import website.italojar.pokeapi.domain.repository.PokemonRepository
 import javax.inject.Inject
@@ -24,16 +25,16 @@ class PokemonsRepositoryImpl @Inject constructor(
         return response.map { pokemonEntity -> pokemonEntity.toDomain() }
     }
 
-    override suspend fun insertPokemons(pokemons: List<PokemonEntity>) {
-        pokemonDao.insertAllPokemons(pokemons)
+    override suspend fun insertPokemons(pokemons: List<Pokemon>) {
+        pokemonDao.insertAllPokemons(pokemons.map { pokemon -> pokemon.toEntity() })
     }
 
-    override suspend fun insertPokemon(pokemon: PokemonEntity) {
-        pokemonDao.insertPokemon(pokemon)
+    override suspend fun insertPokemon(pokemon: Pokemon) {
+        pokemonDao.insertPokemon(pokemon.toEntity())
     }
 
-    override suspend fun deletePokemon(pokemon: PokemonEntity) {
-        pokemonDao.deletePokemon(pokemon)
+    override suspend fun deletePokemon(pokemon: Pokemon) {
+        pokemonDao.deletePokemon(pokemon.toEntity())
     }
 
     override suspend fun clearPokemons() {

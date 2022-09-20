@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import website.italojar.pokeapi.domain.mappers.toPresentation
+import website.italojar.pokeapi.presentation.model.mappers.toPresentation
 import website.italojar.pokeapi.domain.usecase.DeletePokemonUseCase
 import website.italojar.pokeapi.domain.usecase.GetPokemonsUseCase
 import website.italojar.pokeapi.domain.usecase.InsertPokemonUseCase
@@ -34,7 +34,7 @@ class PokeListViewModel @Inject constructor(
             isLoading.postValue(true)
             val pokemonsList = getPokemonsUseCase()
             if (!pokemonsList.isNullOrEmpty()){
-                _pokemons.value = pokemonsList
+                _pokemons.value = pokemonsList.map { pokemon -> pokemon.toPresentation()  }
                 isLoading.postValue(false)
             }
         }
